@@ -1,0 +1,97 @@
+:root{
+    --blu: #BE7B2A;
+}
+
+.jumbotron {
+    text-align: center;
+    height: 15rem;
+}
+
+.jumbotron-top {
+    top: 0%;
+}
+
+.jumbotron-bottom {
+    bottom: 0%;
+}
+
+pre{
+    text-align: left !important; 
+}
+
+.menu-item {
+    display: inline;
+    font-size: 1.5rem;
+    border-bottom: 0.2rem solid red;
+    text-decoration: none;
+    font-weight: bold;
+    color: red;
+    padding: 0% 1%;
+    margin-left: 1%;
+}
+
+.align-left{
+    text-align: left;
+}
+
+.align-center {
+    text-align: center;
+}
+
+.panel-left, .panel-right{
+    padding: 1%;
+}
+
+.panel-right {
+    background-color: antiquewhite;
+    text-align: center;
+}
+
+.outline {
+    border: 0.1rem solid grey;
+}
+
+a:hover{
+    text-decoration: none;
+}
+.avatar-container{
+    width: 10rem;
+    height: 10rem;
+    border: 0.1rem solid grey;
+}
+
+.avatar-image{
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.message {
+    padding: 0% 2%;
+}
+
+
+table th {
+    text-align: center !important;
+}
+
+.panel-title {
+    color: red;
+}
+
+
+
+.admin-dash{
+    border: 0.1rem solid #333333;
+    height: 15rem;
+    bottom: 0.1rem;
+    padding: 5%;
+    text-align: center;
+}
+
+.admin-dash:hover{
+    background-color: var(--blu);
+}
+
+.admin-mode {
+    float:right;
+}
