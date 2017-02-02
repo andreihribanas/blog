@@ -2,11 +2,11 @@
 
 require_once('./includes/header.php'); 
 
-/*
-    if (!$_SESSION['loggedin'] ){      
-        header('Location: login.php');
+
+    if ( !$_SESSION['is_logged'] || $_SESSION['role'] != 'admin' ){      
+         $_SESSION['message'] = '<div class="alert alert-danger row-fluid"> <strong> Yo do not have the credentials to access this page. </strong> </div>';
+        header('Location: index.php');
     }
-*/
 ?>
 
     <div class="container">
@@ -24,9 +24,6 @@ require_once('./includes/header.php');
                   <br>   <h1 class="align-center panel-title"> <strong> USERS MANAGEMENT </strong> </h1><br>
                 </div>
                         
-                <div class="row">
-                    <a href="register.php?type=admin" class="menu-item"> Add a new user </a>
-                </div>
                 <br>
                 
                 <div class="row message">
@@ -34,16 +31,21 @@ require_once('./includes/header.php');
                 </div>
                 
                 <br>
-                
+                <div class="row-fluid">
                 <table class="table table-bordered table-striped align-center">
-                    <thead class="thead-inverse">
+                    <thead class="thead-inverse align-center">
                         <tr>
                             <th> No# </th>
                             <th> Username </th>
                             <th> Email </th>
                             <th> Join date </th>
+                            <th> Role </th>
                             <th> Active </th>
+                            <th> Comments </th>
+                            <th> Reputation </th>
                             <th> Action </th>
+                            
+                            
                         </tr>
                     </thead>
 
@@ -59,13 +61,22 @@ require_once('./includes/header.php');
                                         <td> '.$row['userID'].' </td>
                                         <td> '.$row['username'].'  </td>
                                         <td> '.$row['email'].'  </td>
-                                     
-                                        <td> '.$row['join_date'].'  </td>
+                                        <td> '.date('d/m/Y', strtotime($row['join_date'])).'  </td>
+                                        <td> '.$row['role'].'  </td>
                                         <td> '.$row['active'].'  </td>
-                                        <td> 
-                                            <a href="admin-user-disable.php?id='.$row['userID'].'"> Disable | </a>
-                                            <a href="admin-user-disable.php?id='.$row['userID'].'"> Change password | </a>
-                                            <a href="admin-user-delete.php?type=admin&id='.$row['userID'].'" > Delete </a> 
+                                        <td> '.$row['comments_number'].'  </td>
+                                        <td> '.$row['rep_level'].'  </td>
+                                        <td> '; 
+                                
+                                            if ($row['active'] === 0) {
+                                                  echo '<a href="admin-user-actions.php?action=status&id='.$row['userID'].'" onclick=\'return confirm("Are you sure you want to enable '.$row['username'].'?")\'> Enable | </a> ';
+                                            } else {
+                                                 echo '<a href="admin-user-actions.php?action=status&id='.$row['userID'].'" onclick=\'return confirm("Are you sure you want to disable '.$row['username'].'?")\'> Disable | </a> ';
+                                            }
+                                
+                                          echo '
+                                            <a href="admin-user-actions.php?action=change_role&id='.$row['userID'].'" onclick=\'return confirm("Are you sure you want to change the role for '.$row['username'].' ?")\'> Change role | </a> 
+                                            <a href="admin-user-actions.php?action=delete&id='.$row['userID'].'" onclick=\'return confirm("Are you sure you want to delete this user?")\'> Delete </a> 
                                         </td>
                                     </tr>    
                                 ';
@@ -74,7 +85,7 @@ require_once('./includes/header.php');
                         ?>
             
                     </tbody>
-                </table>
+                </table></div>
             </div>
         </div>
     </div>

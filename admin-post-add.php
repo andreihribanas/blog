@@ -36,18 +36,18 @@ require_once('./includes/config.php');
         </div> <br>
         
         
-        <form action='' method='post'>
+        <form action="" method="post">
 
             <p><label>Title</label><br />
-            <input type='text' name='postTitle' value='<?php if(isset($error)){ echo $_POST['postTitle'];}?>'></p>
+            <input type="text" name="postTitle" value=""> </p>
 
             <p><label>Description</label><br />
-            <textarea name='postDesc' cols='60' rows='10'><?php if(isset($error)){ echo $_POST['postDesc'];}?></textarea></p>
+            <textarea name="post_description" cols="60" rows="10">   </textarea></p>
 
             <p><label>Content</label><br />
-            <textarea name='postCont' cols='60' rows='10'><?php if(isset($error)){ echo $_POST['postCont'];}?></textarea></p>
+            <textarea name="post_content" cols="60" rows="10">  </textarea></p>
 
-            <p><input type='submit' name='submit' value='Submit'></p>
+            <p><input type="submit" name="submit" value="Add post"></p>
             
             <div> </div>
             

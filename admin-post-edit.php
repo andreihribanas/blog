@@ -14,7 +14,13 @@
                 ':postID' => $_GET['id']
             ));
             
-            header('Location: admin-post-view.php');
+            IF ($_SESSION['role'] === 'admin'){
+                header('Location: admin-post-view.php');
+            } else {
+                header('Location: viewpost.php?id='.$_GET['id']);
+            }
+            
+            
             $_SESSION['message'] = '<div class="alert alert-success"> <strong> The post details were succesfully updated. </strong> </div>';
             exit;
             

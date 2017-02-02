@@ -55,7 +55,7 @@ class User{
         session_start();
         
         $_SESSION['message'] = '<p class="alert alert-warning"> <strong> You have been logged out.  </strong> ' .$errorMessage. '  </p>';
-        header('Location: index.php');
+        header('Location: login.php');
         exit;
         
     }
@@ -67,6 +67,31 @@ class User{
     
     public function updateUser(){
         
+    }
+    
+    public function changeUserPassword(){
+        
+    }
+    
+    public function changeUserRole($id, $role){
+        try { 
+            // Make user active
+            $stmt = $this->con -> prepare('UPDATE users SET role = :role WHERE userID = :userID');
+            $stmt -> execute(array(
+                'role' => $role,
+                'userID' => $id,
+            ));
+            
+            // notify change role success
+            $_SESSION['message'] = '<div class="alert alert-success"> <strong> The user role was updated. </strong> </div>';
+            
+            // Redirect to admin user page
+            header('Location: admin-user-view.php?');
+            exit;
+            
+       } catch (PDOException $e) {
+            echo $e -> getMessage();
+        }
     }
     
     
@@ -81,6 +106,75 @@ class User{
                 $e->getMessage();
             }
     }
+    
+    public function incrementUserComments($username){
+        try {
+            $stmt = $this->con->prepare( 'UPDATE users SET comments_number = comments_number + 1 WHERE username = :username');
+            $stmt -> execute(array(':username' => $username));
+        } catch (PDOException $e) {
+            echo $e -> getMessage();
+        }
+        
+    }
+    
+    
+        public function toggleUserStatus($id) {
+            
+            try { 
+                $stmt = $this->con -> prepare('SELECT active FROM users WHERE userID = :userID');
+                $stmt -> execute(array(':userID' => $id));
+                $row = $stmt -> fetch();
+
+                if ($row['active'] === 0) {
+                     try { 
+                        // Make user active
+                        $stmt2 = $this->con -> prepare('UPDATE users SET active = :active WHERE userID = :userID');
+                        $stmt2->execute(array(
+                            'active' => 1,
+                            'userID' => $id,
+                        ));
+
+                   } catch (PDOException $e) {
+                        echo $e -> getMessage();
+                    }
+
+                } else {
+                    try{
+                        // Make user inactive
+                        $stmt2 = $this->con -> prepare('UPDATE users SET active = :active WHERE userID = :userID');
+                        $stmt2 ->execute(array(
+                            'active' => 0,
+                            'userID' => $id,
+                        ));
+
+                    } catch (PDOException $e) {
+                        echo $e -> getMessage();
+                    } 
+
+                }
+
+            } catch (PDOException $e) {
+                echo $e -> getMessage();
+            }
+        
+            // Redirect to admin user page
+            header('Location: admin-user-view.php?');
+            exit;
+    }
+    
+    
+    public function get_user_avatar($user){
+        try {
+            $stmt = $this->con->prepare('SELECT avatar_link FROM users WHERE username = :username');
+            $stmt -> execute(array(':username' => $user));
+            $row = $stmt -> fetch();
+            return $row['avatar_link'];
+    
+        } catch (PDOException $e) {
+            echo $e-> getMessage();
+        }
+    }
+    
 
 }
 

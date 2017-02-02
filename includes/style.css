@@ -3,8 +3,10 @@
 }
 
 .jumbotron {
+     height: 15rem;
     text-align: center;
-    height: 15rem;
+    vertical-align: middle;
+   
 }
 
 .jumbotron-top {
@@ -12,20 +14,22 @@
 }
 
 .jumbotron-bottom {
-    bottom: 0%;
+  vertical-align: middle;
+    margin-top: 2%;
+    margin-bottom: 0%;
 }
 
-pre{
-    text-align: left !important; 
+thead{
+    text-align: center;
 }
 
 .menu-item {
     display: inline;
     font-size: 1.5rem;
-    border-bottom: 0.2rem solid red;
+    border-bottom: 0.2rem solid #0275D8;
     text-decoration: none;
     font-weight: bold;
-    color: red;
+    color: #0275D8;
     padding: 0% 1%;
     margin-left: 1%;
 }
@@ -42,14 +46,15 @@ pre{
     padding: 1%;
 }
 
-.panel-right {
-    background-color: antiquewhite;
+
+.panel-right-module {
+    border: 0.1rem solid #F5F5F5;
+    background-color: #F5F5F5;
+    padding: 2% 1%;
     text-align: center;
 }
 
-.outline {
-    border: 0.1rem solid grey;
-}
+
 
 a:hover{
     text-decoration: none;
@@ -57,7 +62,6 @@ a:hover{
 .avatar-container{
     width: 10rem;
     height: 10rem;
-    border: 0.1rem solid grey;
 }
 
 .avatar-image{
@@ -70,28 +74,53 @@ a:hover{
 }
 
 
-table th {
-    text-align: center !important;
-}
-
 .panel-title {
-    color: red;
+    color: #0275D8;
+}
+
+.a-button {
+    display: inline-block;
+    margin-left: 2%;
 }
 
 
+.admin-dashboard {
+    vertical-align: middle;
+}
 
 .admin-dash{
-    border: 0.1rem solid #333333;
-    height: 15rem;
-    bottom: 0.1rem;
-    padding: 5%;
+    border: 0.5rem solid white;
+    height: 16rem;
+    padding: 2%;
     text-align: center;
+    display: inline-block;
+    vertical-align: middle;
+    background-color: #ECEEEF;
 }
 
 .admin-dash:hover{
-    background-color: var(--blu);
+    cursor: pointer;
+
 }
 
 .admin-mode {
     float:right;
+}
+
+
+.reply-area {
+    padding: 0% 1%;
+}
+
+.content{
+    height: 2rem;
+}
+
+.fa-big{
+    font-size:12rem !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    max-height: 100%;
+    max-width: 100%;
+
 }

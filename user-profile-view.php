@@ -31,7 +31,7 @@ require_once('./includes/config.php');
         }
         
         
-        if ($_SESSION['message'] == ''){
+        if (!isset($_SESSION['message'])){
             
             try {
                 $stmt = $con->prepare('UPDATE users SET name = :name, surname = :surname, email = :email, avatar_link = :avatar_link WHERE username = :username');    
@@ -76,7 +76,7 @@ require_once('./includes/config.php');
             $_SESSION['message'] .= '<br> Please confirm the new password.';
         }
         
-        if( !empty($new_password) && !empty($confirm_new_password) && $new_password !== $confirm_new_password){
+        if( !empty($new_password) || !empty($confirm_new_password) || $new_password !== $confirm_new_password){
             $_SESSION['message'] .= '<br> The new password entered is not matching.';
         }
         
@@ -84,7 +84,7 @@ require_once('./includes/config.php');
         if ($_SESSION['message'] == ''){
             
             // Hash password
-            $password_hashed = $user->create_hash($current_password);
+            $password_hashed = password_hash($new_password, PASSWORD_DEFAULT, ['cost' => 11]);
             
             // Update password details
             try {

@@ -1,22 +1,32 @@
 
 <?php
-$url_page = 'example/page/url.php';
-//page the link will request
-$text = 'this is a simple string';    
-$id = '4334%3434';        
-$linktext = "<Clickit> & you will see it";
-//text of the link, with HTML unfriendly characters
+
+require_once('./includes/config.php');
+require_once './libraries/is_email.php';
+
+	//	$_POST = array_map( 'stripslashes', $_POST );
+
+		//collect form data
+//		extract($_POST);
+//
+  //  foreach($_POST as $a){
+ ////       echo '<br> ' .$a;
+ //   }
+//
+
+  //  echo password_hash('123', PASSWORD_DEFAULT, ['cost' => 11]);
+            echo '<td><a href="staff_delete.php?id=' . $id . '" onclick="return confirm("Are you sure?")" > Delete  </a></td>';
+
 ?>
-<?php
-// this gives you a clean link to use
-$url = "http://localhost/";
-$url .= rawurlencode($url_page);
-$url .= "?text=" . urlencode($text);
-$url .= "&id=" . urlencode($id);
-echo htmlspecialchars($url);
-// htmlspecialchars escapes any html that 
-// might do bad things to your html page
-?>
-<a href="<?php echo htmlspecialchars($url); ?>">
-<?php echo htmlspecialchars($linktext) .'<br><br>'; ?>
-</a>
+
+
+<table class="table table-bordered table-striped">
+
+    <tr>
+        <td> first col </td>
+        <td> second col </td>
+        <td> third col </td>
+    </tr>
+
+</table>
+

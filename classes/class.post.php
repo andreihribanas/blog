@@ -10,20 +10,28 @@ class Post {
     }
     
     
-    public function addPost($title, $description, $content){
+    public function addPost($title, $description, $content, $username){
           try {
-                $stmt = $this->con->prepare('INSERT INTO posts (post_title, post_description, post_content, post_date) VALUES (:postTitle, :postDesc, :postCont, :postDate)');
+                $stmt = $this->con->prepare('INSERT INTO posts (post_title, post_description, post_content, post_date, post_author, post_active, post_last_updated, post_class, post_visible_to) 
+                    VALUES (:post_title, :post_description, :post_content, :post_date, :post_author, :post_active, :post_last_updated, :post_class, :post_visible_to)');
                 $stmt->execute(array(
-                        ':postTitle' => $title, 
-                        ':postDesc' => $description,
-                        ':postCont' => $content,
-                        ':postDate' => date('Y-m-d H:i:s') 
+                        ':post_title' => $title, 
+                        ':post_description' => $description,
+                        ':post_content' => $content,
+                        ':post_date' => date('Y-m-d H:i:s'),
+                        ':post_author' => $username,
+                        ':post_active' => 1,
+                        ':post_last_updated' => date('Y-m-d H:i:s'),
+                        ':post_class' => 'normal',
+                        ':post_visible_to' => 'all'
                 ));
-                
-              redirect($_GET['type']);
+              
+                $_SESSION['message'] = '<div class="alert alert-success"> <strong> The post was created. </strong> </div>';
+                header('Location: index.php');
+                exit;
                 
             } catch (PDOException $e) {
-                $e->getMessage();
+               echo $e->getMessage();
             }
        
     }
@@ -41,9 +49,73 @@ class Post {
             $stmt = $this->con->prepare('DELETE FROM posts WHERE postID= :postID');
             $stmt-> execute(array(':postID' => $id));
     
+            $_SESSION['message'] = '<div class="alert alert-success"> <strong> The post was deleted. </strong> </div>';
+            header('Location: admin-post-view.php');
+            exit;
         } catch (PDOException $e) {
                 $e->getMessage();
             }
+    }
+    
+    public function incrementPostViews($id){
+        
+            $stmt = $this->con->prepare( 'UPDATE posts SET post_views = post_views + 1 WHERE postID = :postID');
+            $stmt -> execute(array(':postID' => $id));
+    }    
+    
+    public function incrementPostReplies($id){
+        
+            $stmt = $this->con->prepare( 'UPDATE posts SET post_replies = post_replies + 1 WHERE postID = :postID');
+            $stmt -> execute(array(':postID' => $id));
+    }
+    
+    
+        public function togglePostStatus($id) {
+        
+        try { 
+            $stmt = $this->con -> prepare('SELECT postID, post_active FROM posts WHERE postID = :postID');
+            $stmt -> execute(array(':postID' => $id));
+            $row = $stmt -> fetch();
+            
+            if ($row['post_active'] === 0) {
+                 try { 
+                    // Enable post status (not visible)
+                    $stmt2 = $this->con ->prepare('UPDATE posts SET post_active = :post_active WHERE postID = :postID');
+                    $stmt2->execute(array(
+                        'post_active' => 1,
+                        'postID' => $id,
+                    ));
+
+                    $_SESSION['message'] = '<div class="alert alert-success"> <strong> The post was enabled. </strong> </div>';
+                     
+               } catch (PDOException $e) {
+                    echo $e -> getMessage();
+                }
+
+            } else {
+                try{
+                    // Disable post status (not visible)
+                    $stmt2 = $this->con ->prepare('UPDATE posts SET post_active = :post_active WHERE postID = :postID');
+                    $stmt2 ->execute(array(
+                        'post_active' => 0,
+                        'postID' => $id,
+                    ));
+                    
+                    $_SESSION['message'] = '<div class="alert alert-success"> <strong> The post was disabled. </strong> </div>';
+                    
+                } catch (PDOException $e) {
+                    echo $e -> getMessage();
+                } 
+
+            }
+            
+        } catch (PDOException $e) {
+            echo $e -> getMessage();
+        }
+        
+         // Redirect to comments page
+            header('Location: admin-post-view.php');
+            exit;
     }
     
 }

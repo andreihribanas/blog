@@ -13,21 +13,23 @@ require_once('./includes/config.php');
         $_POST = array_map('stripslashes', $_POST);
         
         extract($_POST);
-        
-        $error = '';
+
+        $postTitle = $_POST['post_title'];
+        $postDescription = $_POST['post_description'];
+        $postContent = $_POST['post_content'];
         
         if ($postTitle == ''){
-            $error .= 'Please enter the title.' ;
+            $_SESSION['message'] .= 'Please enter the title.' ;
         }
         
-        if ($postDesc == ''){
-            $error .= 'Please enter the description.' ;
+        if ($postDescription == ''){
+            $_SESSION['message'] .= 'Please enter the description.' ;
         }
-        if ($postCont == ''){
-            $error .= 'Please enter the content.' ;
+        if ($postContent == ''){
+            $_SESSION['message'] .= 'Please enter the content.' ;
         }
-
-            $post->addPost($postTitle, $postDesc, $postCont);
+        
+        $post->addPost($postTitle, $postDescription, $postContent, $_SESSION['username']);
     }
 
 
@@ -42,20 +44,50 @@ require_once('./includes/config.php');
         </div> <br>
         
         
-        <form action='' method='post'>
+        <form method="POST">
 
-            <p><label>Title</label><br />
-            <input type='text' name='postTitle' value='<?php if(isset($error)){ echo $_POST['postTitle'];}?>'></p>
+            <div class="form-group">
+                <div class="row-fluid">
+                    <label class="form-label"><strong> Title </strong></label>
+                </div>
+                
+                <div class="row-fluid">
+                    <input type="text" name="post_title" class="form-control" value=""> 
+                </div>  
+            </div>
 
-            <p><label>Description</label><br />
-            <textarea name='postDesc' cols='60' rows='10'><?php if(isset($error)){ echo $_POST['postDesc'];}?></textarea></p>
-
-            <p><label>Content</label><br />
-            <textarea name='postCont' cols='60' rows='10'><?php if(isset($error)){ echo $_POST['postCont'];}?></textarea></p>
-
-            <p><input type='submit' name='submit' value='Submit'></p>
+            <br>
             
-            <div> </div>
+            <div class="form-group>">
+                <div class="row-fluid">
+                    <label class="form-label"><strong> Description </strong></label>
+                </div>           
+                
+                <div class="row-fluid">
+                    <textarea name="post_description" cols="60" rows="2" class="form-control">  </textarea>
+                </div>
+            </div>
+           
+            <br>
+             
+            <div class="form-group>">
+                <div class="row-fluid">
+                    <label class="form-label"><strong> Content </strong></label>
+                </div>           
+                
+                <div class="row-fluid">
+                    <textarea name="post_content" cols="60" rows="10" class="form-control"> </textarea>
+                </div>
+            </div>
+            
+            <br>
+            
+            <div class="form-group>">        
+                <div class="row-fluid align-center">
+                    <input type="submit" name="submit" value="Add post" class="btn btn-primary btn-lg">
+                </div>
+            </div>
+
             
         </form>
     </div>

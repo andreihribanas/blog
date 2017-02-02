@@ -31,7 +31,7 @@ require_once('./includes/config.php');
     <body >
     
          <footer id="footer">
-            <div class="jumbotron jumbotron-border">
+            <div class="jumbotron jumbotron-border jumbotron-inversed">
                 <div class="container  jumbotron-top">
                     <div class="row">
                         <div class="col-lg-12 text-center">  
@@ -41,7 +41,7 @@ require_once('./includes/config.php');
                             <br>
                             <p> <strong> Logged in as: </strong> <?php 
                                     if (isset($_SESSION['username'])){
-                                        echo '<a href="user-profile-view.php"> '.$_SESSION['username'].' ('. $_SESSION['role'] .' ) </a> <a href="logout.php"> Logout </a>';
+                                        echo '<a href="user-profile-view.php"> '.$_SESSION['username'].' ('. $_SESSION['role'] .' ) </a>';
                                     } else {
                                         echo '<a href="login.php"> Not logged in. </a>';
                                     }

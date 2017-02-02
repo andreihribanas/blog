@@ -5,9 +5,6 @@ session_start();
 
 require_once('./functions.php');
 
-$_SESSION['loggedin'] = false;
-
-
 // Define database credentials
 define('DB_HOST', 'localhost');
 define('DB_USER', 'root');
