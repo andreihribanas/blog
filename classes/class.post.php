@@ -27,6 +27,7 @@ class Post {
                 ));
               
                 $_SESSION['message'] = '<div class="alert alert-success"> <strong> The post was created. </strong> </div>';
+                add_activity($this->con, $_SESSION['username'], 'Created a new post '. $title);
                 header('Location: index.php');
                 exit;
                 
@@ -50,6 +51,7 @@ class Post {
             $stmt-> execute(array(':postID' => $id));
     
             $_SESSION['message'] = '<div class="alert alert-success"> <strong> The post was deleted. </strong> </div>';
+            add_activity($this->con, $_SESSION['username'], 'Deleted a post');
             header('Location: admin-post-view.php');
             exit;
         } catch (PDOException $e) {

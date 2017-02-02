@@ -17,6 +17,8 @@ require_once './libraries/is_email.php';
   //  echo password_hash('123', PASSWORD_DEFAULT, ['cost' => 11]);
             echo '<td><a href="staff_delete.php?id=' . $id . '" onclick="return confirm("Are you sure?")" > Delete  </a></td>';
 
+    add_activity($con, 'sssd', 'dfdfd');
+
 ?>
 
 

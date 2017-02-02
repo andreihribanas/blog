@@ -9,7 +9,7 @@ function load_menu(){
         <a href="index.php" class="menu-item">Home</a>
         <a href="post-add.php" class="menu-item">Create new post</a>
         <a href="user-profile-view.php" class="menu-item" id="btnProfile">Profile</a> 
-        <a href="bugs-report.php" class="menu-item" id="btnProfile">Report a bug</a> 
+        <a href="bug-form.php" class="menu-item" id="btnProfile">Report a bug</a> 
         <a href="logout.php" class="menu-item"> Logout </a>
         <a href="admin-dashboard.php" class="menu-item admin-mode">Admin mode</a>  
     ';
@@ -24,7 +24,7 @@ function load_admin_dashboard(){
         <div class="container admin-dashboard">
             <a href="admin-user-view.php"> <div class="col-md-6 admin-dash"> <i class="fa fa-user fa-big" aria-hidden="true"></i> <strong> USERS </strong> </div> </a>
             <a href="admin-post-view.php"> <div class="col-md-6 admin-dash"> <i class="fa fa-comments fa-big" aria-hidden="true"></i> <strong> POSTS </strong> </div> </a>
-            <a href="admin-comment-view.php"> <div class="col-md-6 admin-dash"> <i class="fa fa-cogs fa-big" aria-hidden="true"></i> <strong> ACTIVITY PANEL </strong></div> </a>
+            <a href="admin-activity-history.php"> <div class="col-md-6 admin-dash"> <i class="fa fa-cogs fa-big" aria-hidden="true"></i> <strong> ACTIVITY HISTORY </strong></div> </a>
             <a href="admin-comment-view.php"> <div class="col-md-6 admin-dash"> <i class="fa fa-cogs fa-big" aria-hidden="true"></i> <strong> ADMIN REQUESTS </strong></div> </a>
             <a href="admin-bugs-tracking.php"> <div class="col-md-6 admin-dash"> <i class="fa fa-bug fa-big" aria-hidden="true"></i> <strong> BUGS TRACKING </strong></div> </a>
             <a href="logout.php"> <div class="col-md-6 admin-dash"> <i class="fa fa-sign-out fa-big" aria-hidden="true"></i> <strong> LOGOUT </strong></div> </a>
@@ -58,9 +58,7 @@ function editComments($username) {
 }
 
 
-function current_date_format(){
-    return date('Y-m-d H:i:s');
-}
+
 
 function redirect($type){
     $header = '';
@@ -94,6 +92,9 @@ function check_credentials($role){
 */      
 }
 
+function current_date_format(){
+    return date('Y-m-d H:i:s');
+}
 
 function date_to_display($input){
     return date('d F Y', strtotime($input));
@@ -188,6 +189,21 @@ function sanitize_input($input){
 }
 function get_output($input){
     
+}
+
+function add_activity($con, $username, $action){
+    try {
+        $stmt = $con -> prepare('INSERT INTO activity_history (username, action, date) VALUES(:username, :action, :date) ');
+        $stmt -> execute(array(
+            ':username' => $username,
+            ':action' => $action,
+            ':date' => current_date_format()
+        ));
+        
+        
+    } catch (PDOException $e) {
+        echo $e -> getMessage();
+    }
 }
 
 

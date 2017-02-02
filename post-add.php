@@ -30,6 +30,7 @@ require_once('./includes/config.php');
         }
         
         $post->addPost($postTitle, $postDescription, $postContent, $_SESSION['username']);
+       
     }
 
 

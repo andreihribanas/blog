@@ -30,7 +30,7 @@ require_once('./includes/config.php');
 	
     <body >
     
-         <footer id="footer">
+         <header id="header">
             <div class="jumbotron jumbotron-border jumbotron-inversed">
                 <div class="container  jumbotron-top">
                     <div class="row">
@@ -50,4 +50,6 @@ require_once('./includes/config.php');
                     </div>
                 </div>
             </div>   
-        </footer>
+        </header>
+        
+       
