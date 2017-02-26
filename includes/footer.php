@@ -5,9 +5,8 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-12 text-center">  
-
-                            <h6> <strong> &copy; 2017 COPYWRIGHT . ALL RIGHTS RESERVED. </strong> </h6>
-                            <h6> <strong> DESIGNED BY ANDREI HRIBANAS </strong> </h6>
+                            <h3> <strong> &copy; 2017  </strong> </h3>
+                            <h3> <strong> DESIGNED BY ANDREI HRIBANAS </strong> </h3>
                         </div>
                     </div>
                 </div>

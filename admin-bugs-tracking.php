@@ -7,6 +7,7 @@ require_once('./includes/header.php');
          $_SESSION['message'] = '<div class="alert alert-danger row-fluid"> <strong> Yo do not have the credentials to access this page. </strong> </div>';
         header('Location: index.php');
     }
+
 ?>
 
     <div class="container">
@@ -31,9 +32,10 @@ require_once('./includes/header.php');
                     <thead class="thead-inverse align-center">
                         <tr>
                             <th> Username </th>
-                            <th> Name </th>
+                            <th> Title </th>
                             <th> Description </th>
-                            <th> Date </th>
+                            <th> Date recorded</th>
+                            <th> Date solved</th>
                             <th> Status </th>
                             <th> Action </th>
                         </tr>
@@ -51,11 +53,19 @@ require_once('./includes/header.php');
                                         <td> '.$row['requester'].'  </td>
                                         <td> '.$row['bug_name'].'  </td>
                                         <td> '.$row['bug_description'].'  </td>
-                                        <td> '.date('d/m/Y', strtotime($row['bug_date'])).'  </td>
-                                        <td> '.$row['bug_status'].'  </td>
-                                        <td>
-                                            <a href=""><i class="fa fa-check" aria-hidden="true"></i> Solve </a>
-                                        </td>
+                                        <td> '.date('d/m/Y', strtotime($row['bug_record_date'])).'  </td>
+                                        <td> '.date('d/m/Y', strtotime($row['bug_solved_date'])).'  </td>
+                                        <td> '.ucfirst($row['bug_status']).'  </td>
+                                        <td> ';
+                                        
+                                            if ($row['bug_status'] !== 'solved') {
+                                                echo '<a href="admin-bugs-actions.php?action=solve&bug_id='.$row['bugID'].'"><i class="fa fa-check" aria-hidden="true"></i> Solve </a> ';
+                                            } else {
+                                                 echo '<a href="admin-bugs-actions.php?action=unsolve&bug_id='.$row['bugID'].'"><i class="fa fa-square" aria-hidden="true"></i> Unsolve </a> ';
+                                            }
+                                        
+                                            
+                                echo '  </td>
                                     </tr>    
                                 ';
                             }

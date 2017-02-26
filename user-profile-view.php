@@ -13,10 +13,10 @@ require_once('./includes/config.php');
     // UPDATE USER DETAILS
     if (isset($_POST['submit'])){
         
-        $name = $_POST['name'];
-        $surname = $_POST['surname'];
-        $email = $_POST['email'];
-        $avatar_link = $_POST['avatar_link'];
+        $name = filter_var($_POST['name'], FILTER_SANITIZE_STRING);
+        $surname = filter_var($_POST['surname'], FILTER_SANITIZE_STRING);
+        $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+        $avatar_link = filter_var($_POST['avatar_link'], FILTER_SANITIZE_URL);
         
         if ($name == ''){
             $_SESSION['message'] .= '<br> Please enter the first name.';
@@ -26,8 +26,12 @@ require_once('./includes/config.php');
             $_SESSION['message'] .= '<br> Please enter the surname.';
         }
         
-        if ($email == ''){
-            $_SESSION['message'] .= '<br> Please enter your email address.';
+        if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)){
+            $_SESSION['message'] .= '<br> Please enter a valid email address.';
+        }
+        
+        if ( !empty($avatar_link) && !filter_var($avatar_link, FILTER_VALIDATE_URL) ) {
+            $_SESSION['message'] .= '<br> Please enter a valid link.';
         }
         
         
@@ -64,19 +68,19 @@ require_once('./includes/config.php');
         $new_password = $_POST['new_password'];
         $confirm_new_password = $_POST['confirm_new_password'];
         
-        if ($current_password == ''){
+        if (empty($current_password) ){
             $_SESSION['message'] .= '<br> Please enter the current password.';
         }        
         
-        if ($new_password == ''){
-            $_SESSION['message'] .= '<br> Please enter the new password.';
+        if (empty($new_password) || strlen($new_password) < 6 || strlen($new_password) > 10){
+            $_SESSION['message'] .= '<br> Please enter the new password between 6 and 10 characters.';
         }        
         
-        if ($confirm_new_password == ''){
-            $_SESSION['message'] .= '<br> Please confirm the new password.';
+        if (empty($confirm_new_password) || strlen($confirm_new_password) < 6 || strlen($confirm_new_password) > 10 ){
+            $_SESSION['message'] .= '<br> Please enter a confirmation password between 6 and 10 characters.';
         }
         
-        if( !empty($new_password) || !empty($confirm_new_password) || $new_password !== $confirm_new_password){
+        if( $new_password !== $confirm_new_password){
             $_SESSION['message'] .= '<br> The new password entered is not matching.';
         }
         
@@ -167,11 +171,15 @@ require_once('./includes/config.php');
                                     </div>
 
                                     <div class="form-group row">
-                                        <label for="postsNo">Posts: </label> <input type="text" class="form-control" name="postsNo" disabled>
+                                        <label for="postsNo"> Comments: </label> <input type="text" class="form-control" name="postsNo" value="'.number_format($row['comments_number']).'"  disabled>
                                     </div>
                                     
                                     <div class="form-group row">
                                         <label for="reputation">Reputation level: </label> <input type="text" class="form-control" name="reputation" disabled>
+                                    </div>  
+                                    
+                                    <div class="form-group row">
+                                        <a href="" class="btn btn-danger"> Request account delete </a>
                                     </div>
                                 </div>
 

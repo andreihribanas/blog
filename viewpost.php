@@ -52,6 +52,10 @@ require_once('./includes/header.php');
                     <a href="index.php" class="menu-item"> Home </a> <hr>
                 </div> <br>
             
+                 <div class="col-md-12 message"> ';
+                    showMessage();
+echo'                </div>
+            
                 <div class="container-fluid">
                     <div class="row-fluid text-center">
                         <p>Posted on <strong> '.date_to_display($row['post_date'], $con).' </strong> | Post author <strong>'.$row['post_author'].'</strong> </p>
@@ -59,7 +63,7 @@ require_once('./includes/header.php');
                         
                             if ( (isset($_SESSION['username']) && $_SESSION['username'] === $row['post_author']) ||  (isset($_SESSION['role']) && $_SESSION['role'] === 'admin')) {
                                 echo '   <a href="admin-post-edit.php?id='.$row['postID'].'"> <i class="fa fa-pencil fa-fw"></i> Edit </a>   
-                                         <a href=""> <i class="fa fa-trash-o fa-fw"></i> Delete </a>  ';
+                                         <a href="admin-post-actions.php?action=delete&id='.$row['postID'].'" onclick=\'return confirm("Are you sure you want to delete this post?")\'> <i class="fa fa-trash-o fa-fw"></i> Delete </a>  ';
                             }
                         
                         
@@ -136,9 +140,9 @@ require_once('./includes/header.php');
                                     <img src="'. $user->get_user_avatar($row2['comment_author']) .' " alt="The image does not exist." class="avatar-image">  
                                 </div>
 
-                                <div class="row-fluid">
-                                    '. htmlspecialchars($_SESSION['role']) .'
-                                </div>
+                                <div class="row-fluid"> ';
+                                    if (isset($_SESSION['role'])) { echo htmlspecialchars($_SESSION['role']); } 
+                            echo '    </div>
 
                                 <div class="row-fluid">
                                     Created: '. htmlspecialchars(date_to_display($row2['comment_date'])) .'

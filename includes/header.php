@@ -17,8 +17,6 @@ require_once('./includes/config.php');
 		<meta name="HandheldFriendly" content="true">
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css" integrity="sha384-2hfp1SzUoho7/TsGGGDaFdsuuDL0LX2hnUp6VkX3CUQ2K4K+xjboZdsXyp4oUHZj" crossorigin="anonymous">
-        
-        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/themes/prism.css">
 
         <link rel="stylesheet" type="text/css" href="./includes/style.css">
         <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -41,7 +39,7 @@ require_once('./includes/config.php');
                             <br>
                             <p> <strong> Logged in as: </strong> <?php 
                                     if (isset($_SESSION['username'])){
-                                        echo '<a href="user-profile-view.php"> '.$_SESSION['username'].' ('. $_SESSION['role'] .' ) </a>';
+                                        echo '<a href="user-profile-view.php"> '.$_SESSION['username'].' ('. $_SESSION['role'] .' ) <a href="logout.php"> <strong> Logout </strong> </a>  </a>';
                                     } else {
                                         echo '<a href="login.php"> Not logged in. </a>';
                                     }

@@ -4,15 +4,24 @@ $_SESSION['message'] = '';
 
 
     if(isset($_POST['submit'])){
+        
         $username = $_POST['username'];
         $password = $_POST['password'];
-        
-        if ($username == '') {
-            $_SESSION['message'] .= '<br> Please enter your username.';
+                
+        if (empty($username) || strlen($username) < 3) {
+            $_SESSION['message'] .= '<br> Please username must be at least 3 characters long.';
         }
         
-        if ($password == '') {
-            $_SESSION['message'] .= '<br> Please enter your password.';
+        if (empty($password) || strlen($password) < 6 || strlen($password) > 10) {
+            $_SESSION['message'] .= '<br> The password length must have at least 6 and maximum 10 characters.';
+        }
+        
+        if ( !ctype_alnum($username)){
+            $_SESSION['message'] .= '<br> Please insert only alphanumeric characters for your username.';
+        }
+        
+        if (!ctype_alnum($username)) {
+            $_SESSION['message'] .= '<br> The username must contain only alphanumeric characters.';
         }
         
         if (empty($_SESSION['message'])) {
@@ -31,11 +40,9 @@ $_SESSION['message'] = '';
                 if ( $row['username'] === $username && password_verify($password, $row['password']) ) {
                     
                         if ($row['active'] === 1) {
+                            
                             $_SESSION['username'] = $username;
-                            $_SESSION['loggedin'] = true;
-
                             $_SESSION['is_logged'] = true;
-
                             $_SESSION['role'] = $row['role'];
 
                             $_SESSION['message'] = '<p class="alert alert-info"> <strong> You have been logged in.  </strong> ' .$_SESSION['message']. '  </p>';
@@ -78,38 +85,40 @@ $_SESSION['message'] = '';
                 
                 <h1 class="align-center"><strong> LOGIN PAGE </strong></h1>
                 
-                <div class="form-group row ">
+                <div class="form-group row">
                     <div class="col-md-8 col-lg-8"> <?php showMessage(); ?> </div>
                 </div>  
                 
                 <div class="form-group row">
-                    <div class="col-md-6">
+                    <div class="col-md-8 offset-md-2">
                         <label class="form-label" for="username"><strong> Enter username: </strong></label>
                         <input type="text" name = "username" class="form-control" placeholder="Please enter your username">  
                     </div>
                 </div>    
 
                 <div class="row form-group">
-                    <div class="col-md-6">
+                    <div class="col-md-8 offset-md-2">
                         <label class="form-label" for="password"><strong> Enter password: </strong></label>
                         <input type="password" name="password" class="form-control" placeholder="Please enter your password">  
                     </div>
                 </div>
 
                 <div class="row form-group align-center">
-                    <div class="col-md-6">
+                    <div class="col-md-6 offset-md-3">
                         <button type="submit" name="submit" class="btn btn-primary"> Submit </button>
                     </div>
                 </div>
 
 
                 <div class="row form-group">
-                    <div class="col-md-6lign-center">
+                    <div class="col-md-12 align-center">
                         <a href="register.php" class="text-center"> <strong> Don't have an account? Do not waste any more time and click here! </strong> </a>
                     </div>
-                    
-                    <div class="col-md-6 align-center">
-                        <a href="#.php" class="text-center"> <strong> Forgot username or password </strong> </a>
+                </div>
+                
+                <div class="row form-group">    
+                    <div class="col-md-12 align-center">
+                        <a href="#.php" class="text-center"> <strong> Forgot username or password? </strong> </a>
                     </div>
                 </div>
             </form>

@@ -88,7 +88,7 @@ class Post {
                         'postID' => $id,
                     ));
 
-                    $_SESSION['message'] = '<div class="alert alert-success"> <strong> The post was enabled. </strong> </div>';
+                    $_SESSION['message'] = '<div class="alert alert-success"> <strong> The post is now active. </strong> </div>';
                      
                } catch (PDOException $e) {
                     echo $e -> getMessage();
@@ -103,7 +103,7 @@ class Post {
                         'postID' => $id,
                     ));
                     
-                    $_SESSION['message'] = '<div class="alert alert-success"> <strong> The post was disabled. </strong> </div>';
+                    $_SESSION['message'] = '<div class="alert alert-success"> <strong> The post is now inactive. </strong> </div>';
                     
                 } catch (PDOException $e) {
                     echo $e -> getMessage();

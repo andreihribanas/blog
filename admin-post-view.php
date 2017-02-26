@@ -6,20 +6,7 @@ function id(){
     echo $_GET['id'];
 }
     
-
 ?>
-<!--
-    <div class="container">
-        
-        <div class="col-md-6 admin-dash"> USERS </div>
-        <div class="col-md-6 admin-dash"> POSTS </div>
-        <div class="col-md-6 admin-dash"> COMMENTS </div>
-        <div class="col-md-6 admin-dash"> LOGOUT </div>
-
-    </div>
--->
-
-
 
     <div class="container-fluid">
         <div class="row">
@@ -92,9 +79,9 @@ function id(){
                                             <a href="admin-post-edit.php?id='.$row['postID'].'"> Edit | </a> ';
                                             
                                             if ($row['post_active'] === 0) {
-                                                echo ' <a href="admin-post-actions.php?action=change_status&id='.$row['postID'].'" onclick=\'return confirm("Are you sure you want to disable the post?")\' > Enable | </a> ';
+                                                echo ' <a href="admin-post-actions.php?action=change_status&id='.$row['postID'].'" onclick=\'return confirm("Are you sure you want to make the post active?")\' > Make active | </a> ';
                                             } else {
-                                                echo ' <a href="admin-post-actions.php?action=change_status&id='.$row['postID'].'" onclick=\'return confirm("Are you sure you want to disable the post?")\'> Disable | </a> ';
+                                                echo ' <a href="admin-post-actions.php?action=change_status&id='.$row['postID'].'" onclick=\'return confirm("Are you sure you want to disable the post inactive?")\'> Make inactive | </a> ';
                                             }
                                 
                                         echo '

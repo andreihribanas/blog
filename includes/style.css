@@ -3,25 +3,18 @@
 }
 
 .jumbotron {
-     height: 15rem;
+    height: 15rem;
     text-align: center;
     vertical-align: middle;
-   
 }
 
-.jumbotron-top {
-    top: 0%;
-}
 
 .jumbotron-bottom {
-  vertical-align: middle;
+    vertical-align: middle;
     margin-top: 2%;
     margin-bottom: 0%;
 }
 
-thead{
-    text-align: center;
-}
 
 .menu-item {
     display: inline;
@@ -123,4 +116,8 @@ a:hover{
     max-height: 100%;
     max-width: 100%;
 
+}
+
+.form-group, .form-control {
+    text-align: center;
 }

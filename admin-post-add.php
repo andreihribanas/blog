@@ -21,7 +21,7 @@ require_once('./includes/config.php');
         }
         
         
-            $post->addPost($postTitle, $postDesc, $postCont);
+        $post->addPost($postTitle, $postDesc, $postCont);
     }
 
 

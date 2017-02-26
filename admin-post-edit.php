@@ -6,11 +6,12 @@
     if (isset($_POST['submit'])){
         
         try {
-            $stmt = $con->prepare('UPDATE posts SET post_title = :postTitle, post_description = :postDesc, post_content = :postCont WHERE postID = :postID');    
+            $stmt = $con->prepare('UPDATE posts SET post_title = :postTitle, post_description = :postDesc, post_content = :postCont, post_last_updated = :post_last_updated WHERE postID = :postID');    
             $stmt->execute(array(
                 ':postTitle' => $_POST['postTitle'],
                 ':postDesc' => $_POST['postDesc'],
                 ':postCont' => $_POST['postCont'],
+                ':post_last_updated' => current_date_format(),
                 ':postID' => $_GET['id']
             ));
             

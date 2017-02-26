@@ -10,7 +10,7 @@
                 ':bug_name' => $_POST['bug_name'],
                 ':bug_description' => $_POST['bug_description'],
                 ':bug_status' => 'Pending',
-                ':bug_date' => current_date_format(),
+                ':bug_record_date' => current_date_format(),
                 ':requester' => $_SESSION['username']
             ));
         

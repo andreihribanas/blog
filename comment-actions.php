@@ -2,13 +2,10 @@
 
 require_once('./includes/header.php');
 
-
+    // UPDATE COMMENT
     if (isset($_GET['update'])){
-        echo "update that biatch: " . $_GET['update'];
-        
         
         if (isset($_POST['update-comment'])) {
-            echo 'ypdate comment requested: id= '.$_POST['post_id'];
             
             try {
                 $stmt = $con -> prepare('UPDATE comments SET comment_content = :content, comment_last_updated = :date WHERE commentID = :commentID');
@@ -63,15 +60,10 @@ require_once('./includes/header.php');
     }
 
 
-
-    // Delete comments
+    // Delete comments function
     if (isset($_GET['delete'])){
-        $stmt = $con->prepare('DELETE FROM comments WHERE commentID = :commentID');
-        $stmt->execute(array(':commentID' => $_GET['delete']));
-        
-        header('Location: viewpost.php?id='.$_GET['id']);
-        $_SESSION['message'] = '<p class="alert alert-success container"> <strong> The comment was deleted.  </strong> </p>'; 
-        exit;
+       $comment -> deleteComment($_GET['delete'], $_GET['id']);
+    
     }
 
 
@@ -79,3 +71,16 @@ require_once('./includes/header.php');
 require_once('./includes/footer.php');
 ?>
 
+<!--- Load text editor --->
+<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+        <script>
+                tinymce.init({
+                    selector: "textarea",
+                    plugins: [
+                        "advlist autolink lists link image charmap print preview anchor",
+                        "searchreplace visualblocks code fullscreen",
+                        "insertdatetime media table contextmenu paste"
+                    ],
+                    toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+                });
+        </script>

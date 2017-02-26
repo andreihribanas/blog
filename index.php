@@ -20,13 +20,6 @@
     <div class="container">
      
             <div class="col-md-8 panel-left">
-                
-                <div class="row">
-                    <div class="col-md-12">
-                        <h1> <strong> STICKY </strong></h1>
-                    </div>
-                </div>
-   
                 <hr>
                 
                 
@@ -45,7 +38,7 @@
                         </div>         
                         
                         <div class="row">
-                            <h5 class="post-date"> Created on:  '.date('jS M Y H:i:s', strtotime($row['post_date'])).'  </h5>
+                            <h5 class="post-date"> Created on:  '.date('jS M Y H:i:s', strtotime($row['post_date'])).' | Last updated </h5>
                         </div>
                     </div>
                     
@@ -66,21 +59,19 @@
                   <?php   
                     try {
 
-                        $stmt = $con-> query('SELECT * FROM posts ORDER BY postID DESC');
+                        $stmt = $con-> query('SELECT * FROM posts ORDER BY post_class DESC, postID DESC');
 
                         while ($row = $stmt -> fetch()) {
                             
                             // Show only active posts to users and all to admin
                             if ( $row['post_active'] || $_SESSION['role'] === 'admin'){
-                                if ($row['post_class'] === 'sticky') {
-
-                                } 
+                            
                                     echo '<div class="container-fluid">';
-                                          echo  '<h1 class="post-title"> <strong> ' . $row['post_title'] . ' </strong></h1>
+                                          echo  '<h1 class="post-title"> <strong> '. check_sticky($row['post_class']) . $row['post_title'] . ' </strong></h1>
                                                 <h5 class="post-description text-muted"> '.$row['post_description'].' </h5>
                                                 <h6 class="post-date"> <strong> Author: </strong>' .   get_post_author($row['postID'], $con) . ' </h6>
-                                                <h6 class="post-date"> <strong> Created on:  </strong>'.date_to_display($row['post_date']).' </h6>
-                                                <a href="viewpost.php?id='.htmlspecialchars($row['postID']).'"> Read More </a>
+                                                <h6 class="post-date"> <strong> Created on:  </strong>'.date_to_display($row['post_date']).' | Last updated: '.date_to_display($row['post_last_updated']).' </h6>
+                                                <a href="viewpost.php?id='.htmlspecialchars($row['postID']).'" class="btn btn-primary"> Read More </a>
                                             <hr><br>';
                                     echo '</div>';
                                 

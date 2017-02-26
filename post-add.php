@@ -10,26 +10,26 @@ require_once('./includes/config.php');
 
 
     if (isset($_POST['submit'])){
-        $_POST = array_map('stripslashes', $_POST);
         
+        $_POST = array_map('stripslashes', $_POST);
         extract($_POST);
 
-        $postTitle = $_POST['post_title'];
-        $postDescription = $_POST['post_description'];
-        $postContent = $_POST['post_content'];
+        $post_title = filter_var($_POST['post_title'], FILTER_SANITIZE_STRING);
+        $post_description = filter_var($_POST['post_description'], FILTER_SANITIZE_STRING);
+        $post_content = $_POST['post_content'];
         
-        if ($postTitle == ''){
-            $_SESSION['message'] .= 'Please enter the title.' ;
+        if (empty($post_title) || strlen($post_title) < 2){
+            $_SESSION['message'] .= 'Please enter a title at least 2 characters long.' ;
         }
         
-        if ($postDescription == ''){
+        if (empty($post_description)){
             $_SESSION['message'] .= 'Please enter the description.' ;
         }
-        if ($postContent == ''){
+        if (empty($post_content)) {
             $_SESSION['message'] .= 'Please enter the content.' ;
         }
         
-        $post->addPost($postTitle, $postDescription, $postContent, $_SESSION['username']);
+        $post->addPost($post_title, $post_description, $post_content, $_SESSION['username']);
        
     }
 

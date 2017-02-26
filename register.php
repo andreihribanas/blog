@@ -8,11 +8,10 @@
     if (isset($_POST['submit'])){
         
         // Sanitize input
-        
-        $name = $_POST['name'];
-        $surname = $_POST['surname'];
+        $name = filter_var($_POST['name'], FILTER_SANITIZE_STRING);
+        $surname = filter_var($_POST['surname'], FILTER_SANITIZE_STRING);
         $username = $_POST['username'];
-        $email = $_POST['email'];
+        $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
         $password = $_POST['password'];
         $confirm_password = $_POST['confirm_password'];
     
@@ -26,11 +25,14 @@
         }
                   
         if ( strlen($name) < 2 || strlen($surname) < 2)  {
-            $_SESSION['message'] .= '<br> The name or surname is too short.';
+            $_SESSION['message'] .= '<br> The name or surname must be at least 2 characters long.';
         }
         
-        if (empty($username) || strlen($username) < 6){
-            $_SESSION['message'] .= '<br> Please enter an username that contains at least 6 characters.';
+        if (empty($username) || strlen($username) < 3){
+            $_SESSION['message'] .= '<br> The username must be at least 3 characters long.';
+        }       
+        if ( !ctype_alnum($username)){
+            $_SESSION['message'] .= '<br> Please insert only alphanumeric characters for your username.';
         }
 
         if (!is_username_available($username, $con)){
@@ -45,13 +47,14 @@
             $_SESSION['message'] .= '<br> The email was already is already associated with an account.';
         }
         
-        if (empty($password) || strlen($password) < 6){
-            $_SESSION['message'] .= '<br> Please enter a password of at least 6 characters.';
+        if (empty($password) || strlen($password) < 6 || strlen($password) >10){
+            $_SESSION['message'] .= '<br> Please enter a password between 6 and 10 characters.';
         }
                        
         if (empty($confirm_password) || $password !== $confirm_password){
             $_SESSION['message'] .= '<br> Please enter a matching password.';
         }
+        
         
         if (empty($_SESSION['message'])) {
         

@@ -73,6 +73,7 @@ class User{
         
     }
     
+    
     public function changeUserRole($id, $role){
         try { 
             // Make user active
@@ -99,7 +100,6 @@ class User{
         try {
             $stmt = $this->con->prepare('DELETE FROM users WHERE userID= :userID');
             $stmt-> execute(array(':userID' => $id));
-    
             $_SESSION['message'] = '<div class="alert alert-success"> <strong> The user was deleted. </strong> </div>';
                 
         } catch (PDOException $e) {
@@ -118,8 +118,8 @@ class User{
     }
     
     
-        public function toggleUserStatus($id) {
-            
+    public function toggleUserStatus($id) {
+
             try { 
                 $stmt = $this->con -> prepare('SELECT active FROM users WHERE userID = :userID');
                 $stmt -> execute(array(':userID' => $id));
@@ -156,7 +156,7 @@ class User{
             } catch (PDOException $e) {
                 echo $e -> getMessage();
             }
-        
+
             // Redirect to admin user page
             header('Location: admin-user-view.php?');
             exit;
@@ -169,7 +169,7 @@ class User{
             $stmt -> execute(array(':username' => $user));
             $row = $stmt -> fetch();
             return $row['avatar_link'];
-    
+
         } catch (PDOException $e) {
             echo $e-> getMessage();
         }
@@ -177,19 +177,5 @@ class User{
     
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ?>

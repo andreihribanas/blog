@@ -12,12 +12,12 @@ class Comment {
     
     public function addComment($title, $description, $content){
           try {
-                $stmt = $this->con->prepare('INSERT INTO posts () VALUES (:, :, :, :)');
+                $stmt = $this->con->prepare('INSERT INTO posts VALUES (:post_title, :post_description, :post_content, :post_date)');
                 $stmt->execute(array(
-                        ':postTitle' => $a, 
-                        ':postDesc' => $a,
-                        ':postCont' => $a,
-                        ':postDate' => date('Y-m-d H:i:s') 
+                        ':post_title' => $a, 
+                        ':post_description' => $a,
+                        ':post_content' => $a,
+                        ':post_date' => date('Y-m-d H:i:s') 
                 ));
                 exit;
                 
@@ -35,11 +35,11 @@ class Comment {
         }
     }
     
-    public function deleteComment($id){
+    public function deleteComment($id, $page){
         try {
-            $stmt = $this->con->prepare('DELETE FROM comments WHERE commentID= :commentID');
+            $stmt = $this->con->prepare('DELETE FROM comments WHERE commentID = :commentID');
             $stmt-> execute(array(':commentID' => $id));
-            header('Location: admin-dashboard.php');
+            header('Location: viewpost.php?id='.$page);
             exit;  
             
         } catch (PDOException $e) {
@@ -47,6 +47,8 @@ class Comment {
             }
        
     }
+    
+    
     
     public function toggleCommentStatus($comment_id) {
         
@@ -57,7 +59,7 @@ class Comment {
             
             if ($row['comment_active'] === 0) {
                  try { 
-                    // Disable comment status (not visible)
+                    // Make comment active
                    $stmt2 = $this->con ->prepare('UPDATE comments SET comment_active = :comment_active WHERE commentID = :comment_id');
                     $stmt2->execute(array(
                         'comment_active' => 1,
@@ -70,7 +72,7 @@ class Comment {
 
             } else {
                 try{
-                    // Disable comment status (not visible)
+                    // Make comment inactive
                     $stmt2 = $this->con ->prepare('UPDATE comments SET comment_active = :comment_active WHERE commentID = :comment_id');
                     $stmt2 ->execute(array(
                         'comment_active' => 0,
@@ -87,25 +89,12 @@ class Comment {
             echo $e -> getMessage();
         }
         
-         // Redirect to comments page
+         // Redirect to viewpost page
             header('Location: viewpost.php?id='.$_GET['id']);
             exit;
     }
     
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
